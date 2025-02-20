@@ -41,4 +41,11 @@ public class Conta {
         return tipoConta;
     }
 
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public void setLimite(double limite) {
+        this.limite = limite;
+    }
 }
