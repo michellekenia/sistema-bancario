@@ -1,4 +1,9 @@
 ### IntelliJ IDEA ###
+.idea/
+.idea/vcs.xml
+src/.idea/
+src/sistema-bancario.iml
+*.iml
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
