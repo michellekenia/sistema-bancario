@@ -1,20 +1,23 @@
 package model;
 
+import enuns.TipoCliente;
+import enuns.TipoConta;
+
 public class Conta {
     private String numeroConta;
-    private String agencia;
+    private String numeroAgencia;
     private Cliente cliente;
     private double saldo;
     private double limite;
-    private String tipoConta;
+    private TipoConta tipoConta;
 
-    public Conta(String numeroConta, String tipoConta, double saldo, String agencia, Cliente cliente, double limite) {
+    public Conta(String numeroConta, String numeroAgencia, Cliente cliente, double saldo, double limite, TipoConta tipoConta) {
         this.numeroConta = numeroConta;
-        this.tipoConta = tipoConta;
-        this.saldo = saldo;
-        this.agencia = agencia;
+        this.numeroAgencia = numeroAgencia;
         this.cliente = cliente;
+        this.saldo = saldo;
         this.limite = limite;
+        this.tipoConta = tipoConta;
     }
 
     public String getNumeroConta() {
@@ -22,7 +25,7 @@ public class Conta {
     }
 
     public String getAgencia() {
-        return agencia;
+        return numeroAgencia;
     }
 
     public Cliente getCliente() {
@@ -37,7 +40,7 @@ public class Conta {
         return limite;
     }
 
-    public String getTipoConta() {
+    public TipoConta getTipoConta() {
         return tipoConta;
     }
 

@@ -6,16 +6,16 @@ public class Transacao {
 
     private String tipo;
     private double valor;
-    private String contaOrigem;
-    private String contaDestino;
+    private Conta contaOrigem;
+    private Conta contaDestino;
     private LocalDateTime dataHora;
 
-    public Transacao(String tipo, LocalDateTime dataHora, String contaOrigem, String contaDestino, double valor) {
+    public Transacao(String tipo, double valor, Conta contaOrigem, Conta contaDestino, LocalDateTime dataHora) {
         this.tipo = tipo;
-        this.dataHora = dataHora;
+        this.valor = valor;
         this.contaOrigem = contaOrigem;
         this.contaDestino = contaDestino;
-        this.valor = valor;
+        this.dataHora = dataHora;
     }
 
     public String getTipo() {
@@ -26,11 +26,11 @@ public class Transacao {
         return valor;
     }
 
-    public String getContaOrigem() {
+    public Conta getContaOrigem() {
         return contaOrigem;
     }
 
-    public String getContaDestino() {
+    public Conta getContaDestino() {
         return contaDestino;
     }
 
