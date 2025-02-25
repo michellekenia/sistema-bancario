@@ -24,7 +24,7 @@ public class Conta {
         return numeroConta;
     }
 
-    public String getAgencia() {
+    public String getNumeroAgencia() {
         return numeroAgencia;
     }
 
