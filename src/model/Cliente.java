@@ -32,5 +32,9 @@ public class Cliente {
     public List<Conta> getContas() {
         return contas;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }
 
