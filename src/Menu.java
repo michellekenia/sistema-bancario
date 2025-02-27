@@ -1,10 +1,12 @@
 import enuns.TipoCliente;
 import enuns.TipoConta;
+import enuns.TipoTransacao;
 import model.Cliente;
 import model.Conta;
 import service.ClienteService;
 import service.ContaService;
 import service.TransacaoService;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -44,7 +46,7 @@ public class Menu {
                     criarConta();
                     break;
                 case 3:
-                    realizarTransacao();
+                    menuTransacoes();
                     break;
                 case 4:
                     exibirInformacoes();
@@ -56,6 +58,38 @@ public class Menu {
                     System.out.println("Opção inválida! Tente novamente.");
             }
         }
+    }
+
+    private void menuTransacoes() {
+        System.out.println("\n=== MENU DE TRANSAÇÕES ===");
+        System.out.println("1 - Saque");
+        System.out.println("2 - Depósito");
+        System.out.println("3 - Transferência");
+        System.out.print("Escolha uma opção: ");
+
+        int opcao = scanner.nextInt();
+        scanner.nextLine();
+
+        TipoTransacao tipo = null;
+
+        switch (opcao) {
+            case 1:
+                tipo = TipoTransacao.SAQUE;
+                break;
+            case 2:
+                tipo = TipoTransacao.DEPOSITO;
+                break;
+            case 3:
+                tipo = TipoTransacao.TRANSFERENCIA;
+                break;
+            case 0:
+                System.out.println("Voltando ao menu principal...");
+                return;
+            default:
+                System.out.println("Opção inválida! Voltando ao menu principal...");
+        }
+
+        realizarTransacao(tipo);
     }
 
     private void criarCliente() {
@@ -102,7 +136,7 @@ public class Menu {
         TipoConta tipoConta = tipo.equals("POUPANCA") ? TipoConta.CONTA_POUPANCA : TipoConta.CONTA_CORRENTE;
 
         Conta novaConta = new Conta(numeroConta, numeroAgencia, cliente, saldo, limite, tipoConta);
-        cliente.getContas().add(novaConta); // Adiciona a conta ao cliente
+        cliente.getContas().add(novaConta);
 
         boolean sucesso = contaService.criarConta(novaConta);
         if (sucesso) {
@@ -121,13 +155,9 @@ public class Menu {
 
     }
 
-    private void realizarTransacao() {
-        System.out.print("Tipo de transação (SAQUE/DEPÓSITO/TRANSFERÊNCIA): ");
-        String tipo = scanner.nextLine().toUpperCase();
-
+    private void realizarTransacao(TipoTransacao tipo) {
         System.out.print("Número da conta de origem: ");
         String numeroContaOrigem = scanner.nextLine();
-
 
         Conta contaOrigem = contaService.buscarContaPorNumero(numeroContaOrigem);
         if (contaOrigem == null) {
@@ -136,12 +166,13 @@ public class Menu {
         }
 
         String numeroContaDestino = null;
-        Conta contaDestino = null;
 
-        if (tipo.equals("TRANSFERÊNCIA")) {
+        if (tipo == TipoTransacao.TRANSFERENCIA) {
             System.out.print("Número da conta de destino: ");
             numeroContaDestino = scanner.nextLine();
-            contaDestino = contaService.buscarContaPorNumero(numeroContaDestino);
+
+            Conta contaDestino = contaService.buscarContaPorNumero(numeroContaDestino);
+
             if (contaDestino == null) {
                 System.out.println("Conta de destino não encontrada.");
                 return;
@@ -159,7 +190,6 @@ public class Menu {
             System.out.println("Erro ao realizar transação: " + e.getMessage());
         }
     }
-
 
     private void exibirInformacoes() {
         System.out.print("Digite o CPF do cliente: ");

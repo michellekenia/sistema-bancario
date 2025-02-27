@@ -1,5 +1,6 @@
 package service;
 
+import enuns.TipoTransacao;
 import model.Conta;
 import model.Transacao;
 import repository.TransacaoRepository;
@@ -17,43 +18,29 @@ public class TransacaoService {
         this.transacaoRepository = transacaoRepository;
     }
 
-    public void realizarTransacao(String tipo, String numeroContaOrigem, String numeroContaDestino, double valor) {
-
-        if (tipo == null || tipo.isBlank()) {
-            throw new IllegalArgumentException("Tipo de transação não pode ser vazio.");
-        }
-
-
-        tipo = tipo.trim().toUpperCase();
-
+    public void realizarTransacao(TipoTransacao tipo, String numeroContaOrigem, String numeroContaDestino, double valor) {
         validarTransacao(tipo, numeroContaOrigem, numeroContaDestino, valor);
 
         boolean sucesso = false;
         Conta contaOrigem = contaService.buscarContaPorNumero(numeroContaOrigem);
         Conta contaDestino = numeroContaDestino != null ? contaService.buscarContaPorNumero(numeroContaDestino) : null;
 
-        switch (tipo.toUpperCase()) {
-            case "SAQUE":
-                contaOrigem = contaService.buscarContaPorNumero(numeroContaOrigem);
+        switch (tipo) {
+            case SAQUE:
                 sucesso = contaService.sacar(numeroContaOrigem, valor);
                 break;
-            case "DEPÓSITO":
-                contaDestino = contaService.buscarContaPorNumero(numeroContaDestino);
+            case DEPOSITO:
                 sucesso = contaService.depositar(numeroContaDestino, valor);
                 break;
-            case "TRANSFERÊNCIA":
-                contaOrigem = contaService.buscarContaPorNumero(numeroContaOrigem);
-                contaDestino = contaService.buscarContaPorNumero(numeroContaDestino);
+            case TRANSFERENCIA:
                 sucesso = contaService.transferir(numeroContaOrigem, numeroContaDestino, valor);
                 break;
-            default:
-                throw new IllegalArgumentException("Tipo de transação inválida.");
         }
 
         if (sucesso) {
             Transacao transacao = new Transacao(
                     UUID.randomUUID().toString(),
-                    tipo.toUpperCase(),
+                    tipo,
                     valor,
                     contaOrigem,
                     contaDestino,
@@ -65,17 +52,14 @@ public class TransacaoService {
         }
     }
 
-    private void validarTransacao(String tipo, String numeroContaOrigem, String numeroContaDestino, double valor) {
-        if (tipo == null || tipo.isEmpty()) {
-            throw new IllegalArgumentException("O tipo da transação deve ser informado.");
-        }
+    private void validarTransacao(TipoTransacao tipo, String numeroContaOrigem, String numeroContaDestino, double valor) {
         if (numeroContaOrigem == null || numeroContaOrigem.isBlank()) {
             throw new IllegalArgumentException("A conta de origem deve ser informada.");
         }
         if (valor <= 0) {
             throw new IllegalArgumentException("O valor da transação deve ser positivo.");
         }
-        if (tipo.equalsIgnoreCase("TRANSFERÊNCIA") && (numeroContaDestino == null || numeroContaDestino.isBlank())) {
+        if (tipo == TipoTransacao.TRANSFERENCIA && (numeroContaDestino == null || numeroContaDestino.isBlank())) {
             throw new IllegalArgumentException("A conta de destino deve ser informada para transferências.");
         }
     }
