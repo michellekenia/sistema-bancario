@@ -21,6 +21,8 @@ public class ContaService {
         if (contaRepository.buscarContaPorNumero(novaConta.getNumeroConta()).isPresent()) {
             throw new IllegalArgumentException("Conta com o número " + novaConta.getNumeroConta() + " já existe.");
         }
+        contaRepository.salvar(novaConta);
+
         return true;
     }
 
