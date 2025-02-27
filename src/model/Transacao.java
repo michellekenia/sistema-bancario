@@ -1,17 +1,19 @@
 package model;
 
+import enuns.TipoTransacao;
+
 import java.time.LocalDateTime;
 
 public class Transacao {
 
     private String id;
-    private String tipo;
+    private TipoTransacao tipo;
     private double valor;
     private Conta contaOrigem;
     private Conta contaDestino;
     private LocalDateTime dataHora;
 
-    public Transacao(String id, String tipo, double valor, Conta contaOrigem, Conta contaDestino, LocalDateTime dataHora) {
+    public Transacao(String id, TipoTransacao tipo, double valor, Conta contaOrigem, Conta contaDestino, LocalDateTime dataHora) {
         this.id = id;
         this.tipo = tipo;
         this.valor = valor;
@@ -24,7 +26,7 @@ public class Transacao {
         return id;
     }
 
-    public String getTipo() {
+    public TipoTransacao getTipo() {
         return tipo;
     }
 
