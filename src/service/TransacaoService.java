@@ -18,6 +18,14 @@ public class TransacaoService {
     }
 
     public void realizarTransacao(String tipo, String numeroContaOrigem, String numeroContaDestino, double valor) {
+
+        if (tipo == null || tipo.isBlank()) {
+            throw new IllegalArgumentException("Tipo de transação não pode ser vazio.");
+        }
+
+
+        tipo = tipo.trim().toUpperCase();
+
         validarTransacao(tipo, numeroContaOrigem, numeroContaDestino, valor);
 
         boolean sucesso = false;
