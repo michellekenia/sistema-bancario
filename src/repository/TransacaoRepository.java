@@ -20,8 +20,11 @@ public class TransacaoRepository {
 
     public List<Transacao> listarPorConta(String numeroConta) {
         return transacoes.stream()
-                .filter(t -> t.getContaOrigem().equals(numeroConta) ||
-                        t.getContaDestino().equals(numeroConta))
+                .filter(t ->
+                        (t.getContaOrigem() != null && t.getContaOrigem().equals(numeroConta)) ||
+                                (t.getContaDestino() != null && t.getContaDestino().equals(numeroConta))
+                )
                 .collect(Collectors.toList());
     }
+
 }

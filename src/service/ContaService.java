@@ -21,6 +21,8 @@ public class ContaService {
         if (contaRepository.buscarContaPorNumero(novaConta.getNumeroConta()).isPresent()) {
             throw new IllegalArgumentException("Conta com o número " + novaConta.getNumeroConta() + " já existe.");
         }
+        contaRepository.salvar(novaConta);
+
         return true;
     }
 
@@ -45,17 +47,25 @@ public class ContaService {
     }
 
     public boolean depositar(String numeroConta, double valor) {
+        if (numeroConta == null || numeroConta.isBlank()) {
+            throw new IllegalArgumentException("O número da conta não pode ser nulo ou vazio.");
+        }
 
         if (valor <= 0) {
             throw new IllegalArgumentException("O valor do depósito deve ser positivo.");
         }
+
         Optional<Conta> contaOptional = contaRepository.buscarContaPorNumero(numeroConta);
-        if (contaOptional.isPresent()) {
-            Conta conta = contaOptional.get();
-            conta.setSaldo(conta.getSaldo() + valor);
-            return true;
+        if (contaOptional.isEmpty()) {
+            throw new NoSuchElementException("Conta destino não encontrada.");
         }
-        return false;
+
+        Conta conta = contaOptional.get();
+
+        conta.setSaldo(conta.getSaldo() + valor);
+        System.out.println("Depósito realizado com sucesso. Novo saldo: " + conta.getSaldo());
+
+        return true;
     }
 
     public boolean sacar(String numeroConta, double valor) {
