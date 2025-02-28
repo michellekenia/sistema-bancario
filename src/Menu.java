@@ -62,6 +62,7 @@ public class Menu {
 
     private void menuTransacoes() {
         System.out.println("\n=== MENU DE TRANSAÇÕES ===");
+        System.out.println("0 - Voltar ao menu anterior.");
         System.out.println("1 - Saque");
         System.out.println("2 - Depósito");
         System.out.println("3 - Transferência");
@@ -156,27 +157,22 @@ public class Menu {
     }
 
     private void realizarTransacao(TipoTransacao tipo) {
-        System.out.print("Número da conta de origem: ");
-        String numeroContaOrigem = scanner.nextLine();
-
-        Conta contaOrigem = contaService.buscarContaPorNumero(numeroContaOrigem);
-        if (contaOrigem == null) {
-            System.out.println("Conta de origem não encontrada.");
-            return;
-        }
-
+        String numeroContaOrigem = null;
         String numeroContaDestino = null;
 
-        if (tipo == TipoTransacao.TRANSFERENCIA) {
+
+        if (tipo == TipoTransacao.DEPOSITO) {
             System.out.print("Número da conta de destino: ");
             numeroContaDestino = scanner.nextLine();
+        } else if (tipo == TipoTransacao.SAQUE) {
+            System.out.print("Número da conta de origem: ");
+            numeroContaOrigem = scanner.nextLine();
+        } else if (tipo == TipoTransacao.TRANSFERENCIA) {
+            System.out.print("Número da conta de origem: ");
+            numeroContaOrigem = scanner.nextLine();
 
-            Conta contaDestino = contaService.buscarContaPorNumero(numeroContaDestino);
-
-            if (contaDestino == null) {
-                System.out.println("Conta de destino não encontrada.");
-                return;
-            }
+            System.out.print("Número da conta de destino: ");
+            numeroContaDestino = scanner.nextLine();
         }
 
         System.out.print("Valor da transação: ");
@@ -184,11 +180,33 @@ public class Menu {
         scanner.nextLine();
 
         try {
-            transacaoService.realizarTransacao(tipo, numeroContaOrigem, numeroContaDestino, valor);
+            System.out.println("LOG - Iniciando " + tipo);
+
+            if (tipo == TipoTransacao.DEPOSITO) {
+                System.out.println("LOG - Conta de destino: " + numeroContaDestino);
+                System.out.println("LOG - Valor: " + valor);
+
+                transacaoService.realizarDeposito(numeroContaDestino, valor);
+            }
+            else if (tipo == TipoTransacao.SAQUE) {
+                System.out.println("LOG - Conta de origem: " + numeroContaOrigem);
+                System.out.println("LOG - Valor: " + valor);
+
+                transacaoService.realizarSaque(numeroContaOrigem, valor);
+            }
+            else if (tipo == TipoTransacao.TRANSFERENCIA) {
+                System.out.println("LOG - Conta de origem: " + numeroContaOrigem);
+                System.out.println("LOG - Conta de destino: " + numeroContaDestino);
+                System.out.println("LOG - Valor: " + valor);
+
+                transacaoService.realizarTransferencia(numeroContaOrigem, numeroContaDestino, valor);
+            }
+
             System.out.println("Transação realizada com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro ao realizar transação: " + e.getMessage());
         }
+
     }
 
     private void exibirInformacoes() {
