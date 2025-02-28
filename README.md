@@ -43,16 +43,16 @@ O usuário poderá navegar facilmente pelas opções, inserindo o número corres
    ```bash
    https://github.com/michellekenia/sistema-bancario
 
-2. Compile o projeto:
-   ```bash
-   javac -d bin src/**/*.java
+2. Abra o projeto no seu editor de código (IntelliJ, VS Code, etc.) e execute a classe principal.
+   <br><br>
+3. Siga as instruções do menu interativo.
 
-3. Execute o programa: 
-   ```bash
-   java -cp bin Main
-   
-4. Siga as instruções do menu interativo.
+## Diagrama de Classes
+![Diagrama de Classes](docs/diagrama-classe.png)
+
+## Diagrama de Sequência
+![Diagrama de Sequência](docs/diagrama-sequencia.png)
 
  
 ## Contato
-Em caso de dúvidas, entre em contato: keniamsoaressl@gmail.com
+Em caso de dúvidas, entre em contato: keniamsoaress@gmail.com
