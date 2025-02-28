@@ -56,7 +56,7 @@ public class TransacaoService {
     private void registrarTransacao(TipoTransacao tipo, double valor, Conta contaOrigem, Conta contaDestino) {
         Transacao transacao = new Transacao(UUID.randomUUID().toString(), tipo, valor, contaOrigem, contaDestino, LocalDateTime.now());
         transacaoRepository.registrarTransacao(transacao);
-        System.out.println("LOG - Transação registrada com sucesso: " + tipo);
+        System.out.println("Transação registrada com sucesso: " + tipo);
     }
 
 

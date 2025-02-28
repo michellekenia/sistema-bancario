@@ -47,33 +47,23 @@ public class ContaService {
     }
 
     public boolean depositar(String numeroConta, double valor) {
-        System.out.println("LOG - Iniciando transação: DEPOSITO");
-
         if (numeroConta == null || numeroConta.isBlank()) {
-            System.out.println("LOG - ERRO: O número da conta não pode ser nulo ou vazio.");
             throw new IllegalArgumentException("O número da conta não pode ser nulo ou vazio.");
         }
 
-        System.out.println("LOG - Conta Destino: " + numeroConta);
-        System.out.println("LOG - Valor: " + valor);
-
-
         if (valor <= 0) {
-            System.out.println("LOG - ERRO: O valor do depósito deve ser positivo.");
             throw new IllegalArgumentException("O valor do depósito deve ser positivo.");
         }
 
         Optional<Conta> contaOptional = contaRepository.buscarContaPorNumero(numeroConta);
         if (contaOptional.isEmpty()) {
-            System.out.println("LOG - ERRO: Conta destino não encontrada.");
             throw new NoSuchElementException("Conta destino não encontrada.");
         }
 
         Conta conta = contaOptional.get();
-        System.out.println("LOG - Conta encontrada. Saldo atual: " + conta.getSaldo());
 
         conta.setSaldo(conta.getSaldo() + valor);
-        System.out.println("LOG - Depósito realizado com sucesso. Novo saldo: " + conta.getSaldo());
+        System.out.println("Depósito realizado com sucesso. Novo saldo: " + conta.getSaldo());
 
         return true;
     }

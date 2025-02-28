@@ -180,29 +180,16 @@ public class Menu {
         scanner.nextLine();
 
         try {
-            System.out.println("LOG - Iniciando " + tipo);
-
             if (tipo == TipoTransacao.DEPOSITO) {
-                System.out.println("LOG - Conta de destino: " + numeroContaDestino);
-                System.out.println("LOG - Valor: " + valor);
-
                 transacaoService.realizarDeposito(numeroContaDestino, valor);
             }
             else if (tipo == TipoTransacao.SAQUE) {
-                System.out.println("LOG - Conta de origem: " + numeroContaOrigem);
-                System.out.println("LOG - Valor: " + valor);
-
                 transacaoService.realizarSaque(numeroContaOrigem, valor);
             }
             else if (tipo == TipoTransacao.TRANSFERENCIA) {
-                System.out.println("LOG - Conta de origem: " + numeroContaOrigem);
-                System.out.println("LOG - Conta de destino: " + numeroContaDestino);
-                System.out.println("LOG - Valor: " + valor);
-
                 transacaoService.realizarTransferencia(numeroContaOrigem, numeroContaDestino, valor);
             }
 
-            System.out.println("Transação realizada com sucesso!");
         } catch (Exception e) {
             System.out.println("Erro ao realizar transação: " + e.getMessage());
         }
