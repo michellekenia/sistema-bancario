@@ -5,8 +5,10 @@ import model.Cliente;
 import model.Conta;
 import service.ClienteService;
 import service.ContaService;
+import service.ExportacaoService;
 import service.TransacaoService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,7 +20,7 @@ public class Menu {
     private final TransacaoService transacaoService;
     private final Scanner scanner;
 
-    public Menu(ClienteService clienteService, ContaService contaService, TransacaoService transacaoService) {
+    public Menu(ClienteService clienteService, ContaService contaService, TransacaoService transacaoService, ExportacaoService exportacaoService) {
         this.clienteService = clienteService;
         this.contaService = contaService;
         this.transacaoService = transacaoService;
@@ -32,7 +34,8 @@ public class Menu {
             System.out.println("2 - Criar Conta");
             System.out.println("3 - Realizar Transação");
             System.out.println("4 - Exibir Informações");
-            System.out.println("5 - Sair");
+            System.out.println("5 - Exportar Histórico de Transações");
+            System.out.println("6 - Sair");
             System.out.print("Escolha uma opção: ");
 
             int opcao = scanner.nextInt();
@@ -52,6 +55,9 @@ public class Menu {
                     exibirInformacoes();
                     break;
                 case 5:
+                    exportarHistorico();
+                    break;
+                case 6:
                     System.out.println("Saindo do sistema...");
                     return;
                 default:
@@ -91,6 +97,11 @@ public class Menu {
         }
 
         realizarTransacao(tipo);
+    }
+
+    private void exportarHistorico() {
+        String caminhoDoArquivo = "/home/mih/IdeaProjects/sistema-bancario/src/relatorios/historico_transacoes.csv";
+        transacaoService.exportarHistorico(caminhoDoArquivo);
     }
 
     private void criarCliente() {
