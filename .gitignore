@@ -32,3 +32,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Ignorar a pasta de relatórios
+relatorios/

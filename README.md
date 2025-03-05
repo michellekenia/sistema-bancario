@@ -47,6 +47,27 @@ O usuário poderá navegar facilmente pelas opções, inserindo o número corres
    <br><br>
 3. Siga as instruções do menu interativo.
 
+## Exportação do Histórico de Transações
+
+### Como Alterar o Caminho do Arquivo de Exportação
+
+Por padrão, o caminho para exportação do arquivo CSV é configurado dentro do código. Para alterar esse caminho e salvar o arquivo em outro local, siga os passos abaixo:
+
+1. **Abra o arquivo da classe `Menu`**. O caminho do arquivo é especificado no método `exportarHistorico`. O código que define o caminho é semelhante a este:
+
+   ```java
+   String caminhoArquivo = "/home/mih/IdeaProjects/sistema-bancario/src/relatorios/historico_transacoes.csv";
+
+2. **Modifique o caminho do arquivo**. Altere o caminho para o local onde clonou o repositório do projeto, para continuar usando a pasta `relatorios` localizada dentro do projeto:
+
+   ```java
+   String caminhoArquivo = "/seu-diretorio/sistema-bancario/src/relatorios/historico_transacoes.csv";
+
+3. **Se desejar, altere o local completamente**. Você pode escolher o local que desejar para salvar o histórico de transações, independente do local do projeto:
+
+   ```java
+   String caminhoArquivo = "/home/usuario/documentos/historico";
+
 ## Diagrama de Classes
 ![Diagrama de Classes](docs/diagrama-classe.png)
 
