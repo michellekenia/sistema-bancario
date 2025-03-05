@@ -3,6 +3,7 @@ import repository.ContaRepository;
 import repository.TransacaoRepository;
 import service.ClienteService;
 import service.ContaService;
+import service.ExportacaoService;
 import service.TransacaoService;
 
 
@@ -15,9 +16,10 @@ public class Main {
 
         ClienteService clienteService = new ClienteService(clienteRepository);
         ContaService contaService = new ContaService(contaRepository);
-        TransacaoService transacaoService = new TransacaoService(contaService, transacaoRepository);
+        ExportacaoService exportacaoService = new ExportacaoService();
+        TransacaoService transacaoService = new TransacaoService(contaService, transacaoRepository, exportacaoService);
 
-        Menu menu = new Menu(clienteService, contaService, transacaoService);
+        Menu menu = new Menu(clienteService, contaService, transacaoService, exportacaoService);
         menu.exibir();
     }
 }

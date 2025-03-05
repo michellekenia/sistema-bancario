@@ -6,18 +6,32 @@ import model.Transacao;
 import repository.TransacaoRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 public class TransacaoService {
 
     private final ContaService contaService;
     private final TransacaoRepository transacaoRepository;
+    private final ExportacaoService exportacaoService;
 
-    public TransacaoService(ContaService contaService, TransacaoRepository transacaoRepository) {
+    public TransacaoService(ContaService contaService, TransacaoRepository transacaoRepository, ExportacaoService exportacaoService) {
         this.contaService = contaService;
         this.transacaoRepository = transacaoRepository;
+        this.exportacaoService = exportacaoService;
+
     }
 
+    public void exportarHistorico(String caminhoArquivo) {
+        List<Transacao> transacoes = transacaoRepository.retornarHistoricoTransacoes();
+
+        if (transacoes != null && !transacoes.isEmpty()) {
+            exportacaoService.exportarParaCSV(transacoes, caminhoArquivo);
+            System.out.println("Histórico de transações exportado para: " + caminhoArquivo);
+        } else {
+            System.out.println("Nenhuma transação para exportar.");
+        }
+    }
 
     public void realizarSaque(String numeroContaOrigem, double valor) {
         validarSaque(numeroContaOrigem, valor);
